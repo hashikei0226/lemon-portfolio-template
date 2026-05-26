@@ -14,11 +14,11 @@
      🎨 カラー設定
      ここを変えると全体の色が変わります
      ============================= */
-  --color-primary:      #F5C518;   /* メインカラー（黄色：Lemonカラー） */
-  --color-primary-dark: #D4A800;   /* ホバー時の黄色（少し濃く） */
+  --color-primary:      #18e6f5;   /* メインカラー（黄色：Lemonカラー） */
+  --color-primary-dark: #4e4bf1;   /* ホバー時の黄色（少し濃く） */
   --color-accent:       #1C1C1E;   /* アクセントカラー（ほぼ黒） */
-  --color-bg:           #FFFEF5;   /* 背景色（ほんのり黄みのある白） */
-  --color-bg-alt:       #F5F4EE;   /* セクション背景色（交互に使う） */
+  --color-bg:           #e2f5fa;   /* 背景色（ほんのり黄みのある白） */
+  --color-bg-alt:       #d6cffa;   /* セクション背景色（交互に使う） */
   --color-text:         #1C1C1E;   /* 本文テキスト色 */
   --color-text-muted:   #888888;   /* サブテキスト・説明文の色 */
   --color-card-bg:      #FFFFFF;   /* カード背景色 */
@@ -472,6 +472,38 @@ ul {
   align-items: center;
   gap: 8px;
   animation: fadeIn 1s 1.2s ease both;
+}
+
+/* タイピングカーソルのスタイル */
+.hero__name-ja::after {
+  /* タイピング前は非表示にする */
+  opacity: 0;
+  transition: opacity 0.3s ease, width 0.1s ease;
+}
+
+.hero__name-ja:not(:empty)::after {
+  opacity: 0.55;
+}
+
+/* クラス付与でカーソル（ボーダー）を表示 */
+.is-typing {
+  border-right: 2px solid var(--color-text);
+  animation: cursorBlink 0.8s infinite;
+  padding-right: 4px;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { border-right-color: var(--color-text); }
+  50% { border-right-color: transparent; }
+}
+
+/* 画像組み立てアニメーション用のスタイル */
+.hero__image-fragment {
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  background-repeat: no-repeat;
+  transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), opacity 1.2s ease;
 }
 
 .hero__scroll span {
