@@ -59,6 +59,8 @@ function typeText(element, text, speed, callback) {
       // タイピング終了後、少し待ってからカーソルを消す
       setTimeout(() => {
         element.classList.remove('is-typing');
+        // Glitch用のdata-text属性を追加
+        element.setAttribute('data-text', text);
         if (callback) callback();
       }, 500);
     }
@@ -85,6 +87,39 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, 800);
   }
+
+  // --- デジタルノイズの生成 ---
+  function createNoise() {
+    const hero = document.getElementById('hero');
+    if (!hero) return;
+
+    for (let i = 0; i < 20; i++) {
+      const noise = document.createElement('span');
+      noise.style.position = 'absolute';
+      noise.style.width = Math.random() * 50 + 'px';
+      noise.style.height = '1px';
+      noise.style.background = Math.random() > 0.5 ? 'var(--color-primary)' : 'var(--color-accent)';
+      noise.style.top = Math.random() * 100 + '%';
+      noise.style.left = Math.random() * 100 + '%';
+      noise.style.opacity = Math.random() * 0.5;
+      noise.style.pointerEvents = 'none';
+      noise.style.zIndex = '0';
+      
+      hero.appendChild(noise);
+      
+      // アニメーション
+      noise.animate([
+        { transform: 'translateX(0)', opacity: 0 },
+        { transform: 'translateX(' + (Math.random() - 0.5) * 100 + 'px)', opacity: 0.5 },
+        { transform: 'translateX(0)', opacity: 0 }
+      ], {
+        duration: Math.random() * 3000 + 2000,
+        iterations: Infinity,
+        easing: 'steps(4)'
+      });
+    }
+  }
+  createNoise();
 
   // --- アイコンの修正（HTMLを変更せずにInstagramアイコンを正しくする） ---
   const links = document.querySelectorAll('.contact__link');
